@@ -1,0 +1,6 @@
+#allow
+chmod +x install.sh
+
+#installer
+./install.sh
+

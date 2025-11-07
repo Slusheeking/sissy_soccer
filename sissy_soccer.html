@@ -350,15 +350,15 @@
             const ball = gameState.ball;
             const currentTime = Date.now();
 
-            // Reduced cooldown system for faster reactions
+            // Ultra-fast reaction system - almost instant decisions
             if (ai.decisionCooldown > 0) {
                 ai.decisionCooldown--;
                 const difference = ai.targetX - ai.x;
                 const absDistance = Math.abs(difference);
 
-                if (absDistance > 5) {
-                    const speedMultiplier = Math.min(absDistance / 40, 1.0);
-                    ai.vx = Math.sign(difference) * SLIME_SPEED * speedMultiplier * 1.15;
+                if (absDistance > 3) {
+                    const speedMultiplier = Math.min(absDistance / 30, 1.0);
+                    ai.vx = Math.sign(difference) * SLIME_SPEED * speedMultiplier * 3.0;
                 } else {
                     ai.vx = 0;
                 }
@@ -430,19 +430,19 @@
             }
             ai.lastBallY = ball.y;
 
-            // Strategic decision-making
+            // Strategic decision-making with 3x speed
             let newTargetX = ai.targetX;
             let shouldJump = false;
             let shouldGrab = false;
-            let moveSpeed = SLIME_SPEED * 1.15;
+            let moveSpeed = SLIME_SPEED * 3.0;
 
             // CRITICAL DEFENSE - Highest priority
             if ((ball.x < GOAL_WIDTH * 3 && ballMovingTowardsAIGoal) ||
                 (ball.x < GOAL_WIDTH * 2 && ball.y > GAME_HEIGHT - GROUND_HEIGHT - GOAL_HEIGHT)) {
 
-                // Emergency goal defense
+                // Emergency goal defense with blazing speed
                 newTargetX = Math.max(ball.x - 15, SLIME_RADIUS + 10);
-                moveSpeed = SLIME_SPEED * 1.4;
+                moveSpeed = SLIME_SPEED * 3.5;
 
                 // Aggressive blocking jumps
                 if (aiDistanceToBall < 100 && (ballHeight < 120 || ball.vy > 0)) {
@@ -476,7 +476,7 @@
                 }
 
                 newTargetX = attackX;
-                moveSpeed = SLIME_SPEED * 1.25 * urgencyMultiplier;
+                moveSpeed = SLIME_SPEED * 3.2 * urgencyMultiplier;
 
                 // Advanced offensive maneuvers
                 if (aiDistanceToBall < 120) {
@@ -550,7 +550,7 @@
                 }
 
                 newTargetX = Math.max(bestInterceptX, SLIME_RADIUS + 5);
-                moveSpeed = SLIME_SPEED * 1.3;
+                moveSpeed = SLIME_SPEED * 3.3;
 
                 // Defensive grab
                 if (ballHeight < 40 && aiDistanceToBall < 70) {
@@ -583,10 +583,10 @@
                 }
             }
 
-            // Faster decision updates - reduced threshold
-            if (Math.abs(newTargetX - ai.targetX) > 10) {
+            // Lightning-fast decision updates - minimal threshold
+            if (Math.abs(newTargetX - ai.targetX) > 8) {
                 ai.targetX = newTargetX;
-                ai.decisionCooldown = 5; // Reduced from 10
+                ai.decisionCooldown = 2; // Ultra-fast - reduced from 5
             }
 
             // Advanced grab logic with hold duration
@@ -598,12 +598,12 @@
                 ai.grabStartTime = null;
             }
 
-            // Precise movement control
+            // Lightning-fast precise movement control
             const difference = ai.targetX - ai.x;
             const absDistance = Math.abs(difference);
 
-            if (absDistance > 5) {
-                const speedMultiplier = Math.min(absDistance / 40, 1.0);
+            if (absDistance > 3) {
+                const speedMultiplier = Math.min(absDistance / 30, 1.0);
                 ai.vx = Math.sign(difference) * moveSpeed * speedMultiplier;
             } else {
                 ai.vx = 0;

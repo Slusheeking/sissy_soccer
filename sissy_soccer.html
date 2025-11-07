@@ -178,7 +178,7 @@
         const SLIME_JUMP_POWER = -12;
         const BALL_DAMPING = 0.99;
         const BALL_BOUNCE_DAMPING = 0.8;
-        const MAX_BALL_SPEED = 13;
+        const MAX_BALL_SPEED = 26;  // 2x faster max speed (was 13)
         const AI_REACTION_DISTANCE = 300;
         const AI_PREDICTION_TIME = 30;
 
@@ -716,9 +716,9 @@
 
                 if (!grabber.isGrabbing) {
                     const releaseAngle = ball.grabAngle;
-                    const releaseSpeed = Math.abs(ball.grabAngularVelocity) * 20;
-                    ball.vx = grabber.vx * 1.5 + Math.cos(releaseAngle) * (3 + releaseSpeed);
-                    ball.vy = grabber.vy - 2 + Math.sin(releaseAngle) * releaseSpeed * 0.3;
+                    const releaseSpeed = Math.abs(ball.grabAngularVelocity) * 40;  // 2x faster (was 20)
+                    ball.vx = grabber.vx * 3.0 + Math.cos(releaseAngle) * (6 + releaseSpeed);  // 2x faster
+                    ball.vy = grabber.vy - 4 + Math.sin(releaseAngle) * releaseSpeed * 0.6;  // 2x faster
                     ball.grabbedBy = null;
                     ball.grabAngle = 0;
                     ball.grabAngularVelocity = 0;
@@ -772,9 +772,9 @@
                             ball.grabAngularVelocity = 0;
                             otherSlime.hasBall = false;
 
-                            // Apply knockback force
-                            ball.vx = Math.cos(angle) * 8 + slime.vx;
-                            ball.vy = Math.sin(angle) * 8 + slime.vy;
+                            // Apply knockback force (2x faster)
+                            ball.vx = Math.cos(angle) * 16 + slime.vx;
+                            ball.vy = Math.sin(angle) * 16 + slime.vy;
                         }
                     }
                     // Check if slime is trying to grab an ungrabbed ball
@@ -796,8 +796,8 @@
                             ball.y = targetY;
 
                             const speed = Math.sqrt(ball.vx * ball.vx + ball.vy * ball.vy);
-                            ball.vx = Math.cos(angle) * speed * 1.5 + slime.vx * 0.5;
-                            ball.vy = Math.sin(angle) * speed * 1.5 + slime.vy * 0.5;
+                            ball.vx = Math.cos(angle) * speed * 3.0 + slime.vx * 1.0;
+                            ball.vy = Math.sin(angle) * speed * 3.0 + slime.vy * 1.0;
 
                             const newSpeed = Math.sqrt(ball.vx * ball.vx + ball.vy * ball.vy);
                             if (newSpeed > MAX_BALL_SPEED) {

@@ -244,9 +244,9 @@
             document.getElementById('mainMenu').classList.remove('active');
             document.getElementById('durationMenu').classList.add('active');
             
-            const controlsText = mode === 'single' 
-                ? 'Use Arrow Keys: ↑ (jump), ←/→ (move), ↓ (grab)<br>Hold ↓ to grab the ball when it\'s near!'
-                : 'Left Team: W (jump), A/D (move), S (grab)<br>Right Team: ↑ (jump), ←/→ (move), ↓ (grab)';
+            const controlsText = mode === 'single'
+                ? 'Use Arrow Keys: ↑/Space (jump), ←/→ (move), ↓ (grab)<br>Hold ↓ to grab the ball when it\'s near!'
+                : 'Left Team: W (jump), A/D (move), S (grab)<br>Right Team: ↑/Space (jump), ←/→ (move), ↓ (grab)';
             
             document.getElementById('controlsText').innerHTML = controlsText;
         }
@@ -627,14 +627,14 @@
                 
                 // Right player (Arrows)
                 gameState.rightSlime.vx = keys['arrowleft'] ? -SLIME_SPEED : keys['arrowright'] ? SLIME_SPEED : 0;
-                if (keys['arrowup'] && gameState.rightSlime.y >= GAME_HEIGHT - GROUND_HEIGHT - 1) {
+                if ((keys['arrowup'] || keys[' ']) && gameState.rightSlime.y >= GAME_HEIGHT - GROUND_HEIGHT - 1) {
                     gameState.rightSlime.vy = SLIME_JUMP_POWER;
                 }
                 gameState.rightSlime.isGrabbing = keys['arrowdown'];
             } else {
                 // Single player - human on right, AI on left
                 gameState.rightSlime.vx = keys['arrowleft'] ? -SLIME_SPEED : keys['arrowright'] ? SLIME_SPEED : 0;
-                if (keys['arrowup'] && gameState.rightSlime.y >= GAME_HEIGHT - GROUND_HEIGHT - 1) {
+                if ((keys['arrowup'] || keys[' ']) && gameState.rightSlime.y >= GAME_HEIGHT - GROUND_HEIGHT - 1) {
                     gameState.rightSlime.vy = SLIME_JUMP_POWER;
                 }
                 gameState.rightSlime.isGrabbing = keys['arrowdown'];
